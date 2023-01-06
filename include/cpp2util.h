@@ -782,6 +782,8 @@ public:
 [&] CPP2_LAMBDA_NO_DISCARD (auto&& obj, auto&& ...params) CPP2_FORCE_INLINE_LAMBDA -> decltype(auto) { \
     if constexpr (requires{ CPP2_FORWARD(obj).FUNCNAME(CPP2_FORWARD(params)...); }) { \
         return CPP2_FORWARD(obj).FUNCNAME(CPP2_FORWARD(params)...); \
+    } else if constexpr (requires{ CPP2_FORWARD(*obj).FUNCNAME(CPP2_FORWARD(params)...); }) { \
+        return CPP2_FORWARD(*obj).FUNCNAME(CPP2_FORWARD(params)...); \
     } else { \
         return FUNCNAME(CPP2_FORWARD(obj), CPP2_FORWARD(params)...); \
     } \
@@ -791,6 +793,8 @@ public:
 [&] CPP2_LAMBDA_NO_DISCARD (auto&& obj) CPP2_FORCE_INLINE_LAMBDA -> decltype(auto) { \
     if constexpr (requires{ CPP2_FORWARD(obj).FUNCNAME(); }) { \
         return CPP2_FORWARD(obj).FUNCNAME(); \
+    } else if constexpr (requires{ CPP2_FORWARD(*obj).FUNCNAME(); }) { \
+        return CPP2_FORWARD(*obj).FUNCNAME(); \
     } else { \
         return FUNCNAME(CPP2_FORWARD(obj)); \
     } \
